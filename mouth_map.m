@@ -58,12 +58,17 @@ BW = imbinarize(m_map, 0.7);
 figure()
 imshow(BW)
 
-BW = bwareafilt(BW,1) % only keep one white object
+BW = bwareafilt(BW,1); % only keep one white object
 
-props = regionprops(BW,'centroid')
-centers = props.Centroid
-figure()
+% Find center and with of white area
+props = regionprops(BW,'centroid', 'area', 'MajoraxisLength', 'MinoraxisLength')
+x_length = props.MajorAxisLength;
+y_length = props.MinorAxisLength;
 
-imshow(BW)
+% Draw image with rectangle
+m_center = round(props.Centroid)
+imshow(I)
+rectangle('Position', [m_center(1)-x_length/2, m_center(2)-y_length/2, x_length, y_length], 'EdgeColor', 'b', 'LineWidth', 2);
+
 
 
