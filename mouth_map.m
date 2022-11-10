@@ -46,7 +46,7 @@ figure();
 imshow(m_map);
 
 
-r = 10;
+r = 5;
 SE = strel('sphere', r); % spherical structuring element
 m_map = imdilate(m_map,SE); % DILATION:
 figure()
@@ -59,6 +59,8 @@ figure()
 imshow(BW)
 
 BW = bwareafilt(BW,1); % only keep one white object
+figure()
+imshow(BW)
 
 % Find center and with of white area
 props = regionprops(BW,'centroid', 'area', 'MajoraxisLength', 'MinoraxisLength')
