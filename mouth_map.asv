@@ -1,0 +1,53 @@
+% I is the input image 
+% returns mouth_map and center of mouth 
+function [m_map, m_center] = mouth_map(I)
+%% Prepare variables
+% Convert RGB image to YCbCr Components
+YCbCr = rgb2ycbcr(I);
+
+% Isolate Y. 
+Y = double(YCbCr(:,:,1));
+% Isolate Cb. 
+Cb = double(YCbCr(:,:,2));
+% Isolate Cr. 
+Cr= double(YCbCr(:,:,3));
+
+Cr2 = Cr.^2;
+
+%% TESTS - can be removed
+
+% Cr2n = 255.*Cr2./max(max(Cr2)) 
+Cr2n = (Cr2-min(Cr2))./(max(Cr2)-min(Cr2)); % add 255.* if uint8
+
+figure();
+imshow(Cr2n);
+
+CrCb = Cr.*Cb;
+
+CrCbn = (CrCb-min(CrCb))./(max(CrCb)-min(CrCb));
+figure();
+imshow(CrCbn);
+
+%% Calculate results
+% n is the number of pixels within the face mask
+% mean2 calculates avarage of matrix elements
+n = 0.95*(mean2(Cr2)/mean2(Cr./Cb));
+
+m_map = Cr2 .* (Cr2-n.*(Cr./Cb)).^2;
+
+% Normalize
+m_map = (m_map-min(m_map))./(max(m_map)-min(m_map));
+% Convert to uint8
+% m_map = uint8(m_map); 
+
+figure();
+imshow(m_map);
+m_center = I;
+
+
+r = 10;
+SE = strel('sphere', r); % spherical structuring element
+m_map = imdilate(m_map,SE); % DILATION:
+mm = imerode(mm,SE); % EROSION
+figure()
+imshow(m_map)

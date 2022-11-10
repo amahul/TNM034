@@ -1,0 +1,4 @@
+img=imread("images/DB0/db0_1.jpg");
+imshow(img)
+
+mouth_map(img)
