@@ -20,13 +20,10 @@ Cr2 = Cr.^2;
 % Cr2n = 255.*Cr2./max(max(Cr2)) 
 
 Cr2n = 255.*(Cr2-min(Cr2))./(max(Cr2)-min(Cr2));
-figure()
-imshow(uint8(Cr2n));
+
 % 
 CrCb = Cr./Cb;
 CrCbn = 255.*(CrCb-min(CrCb))./(max(CrCb)-min(CrCb));
-figure();
-imshow(uint8(CrCbn));
 
 %% Calculate results
 % n is the number of pixels within the face mask
@@ -38,38 +35,32 @@ m_map = (Cr2) .* ((Cr2)-n.*(CrCb)).^2;
 
 % Normalize
 % m_map = 255.*(m_map-min(m_map))./(max(m_map)-min(m_map))
-m_map = 255.*m_map./max(max(m_map))
+m_map = 255.*m_map./max(max(m_map));
 % Convert to uint8
 m_map = uint8(m_map); 
-
-figure();
-imshow(m_map);
 
 
 r = 5;
 SE = strel('sphere', r); % spherical structuring element
 m_map = imdilate(m_map,SE); % DILATION:
-figure()
-imshow(m_map)
 
 % Binarize image with thresholdvalue 0.8
 BW = imbinarize(m_map, 0.7);
 
-figure()
-imshow(BW)
 
 BW = bwareafilt(BW,1); % only keep one white object
 figure()
-imshow(BW)
+imshow(BW);
 
 % Find center and with of white area
-props = regionprops(BW,'centroid', 'area', 'MajoraxisLength', 'MinoraxisLength')
+props = regionprops(BW,'centroid', 'area', 'MajoraxisLength', 'MinoraxisLength');
 x_length = props.MajorAxisLength;
 y_length = props.MinorAxisLength;
 
 % Draw image with rectangle
-m_center = round(props.Centroid)
-imshow(I)
+m_center = round(props.Centroid);
+figure()
+imshow(I);
 rectangle('Position', [m_center(1)-x_length/2, m_center(2)-y_length/2, x_length, y_length], 'EdgeColor', 'b', 'LineWidth', 2);
 
 
