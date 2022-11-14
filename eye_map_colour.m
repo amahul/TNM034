@@ -9,5 +9,3 @@ gray_im = histeq(gray_im);
 
 out_image_colour = gray_im > 20;
 
-imshow(out_image_colour)
-

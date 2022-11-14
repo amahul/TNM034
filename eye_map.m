@@ -36,8 +36,6 @@ EyeMap = uint8(255 * mat2gray(EyeMap));
 
 out_image_illum = imdilate(EyeMap,SE);
 
-imshow(out_image_illum)
-
 
 
 

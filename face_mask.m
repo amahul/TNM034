@@ -1,4 +1,4 @@
-function [binaryImg] = faceMask(inputImg)
+function [binaryImg] = face_mask(inputImg)
 %to binary image
 binaryImg = zeros(size(inputImg, 1), size(inputImg,2));
 

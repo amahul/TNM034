@@ -18,7 +18,4 @@ edge_im = imerode(edge_im,SE);
 edge_im = imerode(edge_im,SE);
 out_image_edge = imerode(edge_im,SE);
 
-imshow(out_image_edge)
-
-
 

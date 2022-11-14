@@ -1,6 +1,6 @@
 function [hybrid_image] = hybrid_eye(in_image)
 
-%Test
+% Test
 % in_image = imread("image_0397.jpg");
 
 out_image_illum = eye_map(in_image);
@@ -18,6 +18,3 @@ ill_and_edge = out_image_illum & out_image_edge;
 colour_and_edge = out_image_colour & out_image_edge;
 
 hybrid_image = ill_and_colour | ill_and_edge | colour_and_edge;
-
-figure()
-imshow(hybrid_image)

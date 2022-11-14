@@ -45,15 +45,12 @@ SE = strel('sphere', r); % spherical structuring element
 m_map = imdilate(m_map,SE); % DILATION:
 
 % Binarize image with thresholdvalue 0.8
-BW = imbinarize(m_map, 0.7);
+m_map = imbinarize(m_map, 0.7);
 
-
-BW = bwareafilt(BW,1); % only keep one white object
-figure()
-imshow(BW);
+m_map = bwareafilt(m_map,1); % only keep one white object
 
 % Find center and with of white area
-props = regionprops(BW,'centroid', 'area', 'MajoraxisLength', 'MinoraxisLength');
+props = regionprops(m_map,'centroid', 'MajoraxisLength', 'MinoraxisLength');
 x_length = props.MajorAxisLength;
 y_length = props.MinorAxisLength;
 
