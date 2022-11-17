@@ -1,6 +1,6 @@
 % I is the input image 
 % returns mouth_map and center of mouth 
-function [m_map, m_center] = mouth_map(I)
+function [m_map] = mouth_map(I)
 %% Prepare variables
 % Convert RGB image to YCbCr Components
 YCbCr = rgb2ycbcr(I);
@@ -45,20 +45,20 @@ SE = strel('sphere', r); % spherical structuring element
 m_map = imdilate(m_map,SE); % DILATION:
 
 % Binarize image with thresholdvalue 0.8
-m_map = imbinarize(m_map, 0.7);
+m_map = imbinarize(m_map, 0.6);
 
-m_map = bwareafilt(m_map,1); % only keep one white object
+% m_map = bwareafilt(m_map,1); % only keep one white object
 
-% Find center and with of white area
+% Find center and width of white area
 props = regionprops(m_map,'centroid', 'MajoraxisLength', 'MinoraxisLength');
 x_length = props.MajorAxisLength;
 y_length = props.MinorAxisLength;
 
 % Draw image with rectangle
-m_center = round(props.Centroid);
-figure()
-imshow(I);
-rectangle('Position', [m_center(1)-x_length/2, m_center(2)-y_length/2, x_length, y_length], 'EdgeColor', 'b', 'LineWidth', 2);
+% m_center = round(props.Centroid);
+% figure()
+% imshow(I);
+% rectangle('Position', [m_center(1)-x_length/2, m_center(2)-y_length/2, x_length, y_length], 'EdgeColor', 'b', 'LineWidth', 2);
 
 
 

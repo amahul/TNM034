@@ -9,8 +9,7 @@ img=imread("images/DB0/db0_3.jpg");
 % 
 % face_mask = faceMask(img);
 % figure();
-% imshow(face_mask)
-% ;
+% imshow(face_mask);
 
 detect_face(img);
 
