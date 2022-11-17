@@ -1,7 +1,7 @@
-function [hybrid_image] = hybrid_eye(in_image)
+%function [hybrid_image] = hybrid_eye(in_image)
 
 % Test
-% in_image = imread("image_0397.jpg");
+%in_image = imread("images/DB1/db1_05.jpg");
 
 out_image_illum = eye_map(in_image);
 out_image_colour = eye_map_colour(in_image);
@@ -18,3 +18,5 @@ ill_and_edge = out_image_illum & out_image_edge;
 colour_and_edge = out_image_colour & out_image_edge;
 
 hybrid_image = ill_and_colour | ill_and_edge | colour_and_edge;
+
+%imshow(hybrid_image)

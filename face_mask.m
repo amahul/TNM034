@@ -36,6 +36,6 @@ binaryImg = imdilate(binaryImg, se);
 binaryImg = imerode(binaryImg, se);
 binaryImg = imerode(binaryImg, se);
 
-imshow(binaryImg);
+%imshow(binaryImg);
 end
 

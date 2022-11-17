@@ -55,10 +55,10 @@ x_length = props.MajorAxisLength;
 y_length = props.MinorAxisLength;
 
 % Draw image with rectangle
-% m_center = round(props.Centroid);
-% figure()
-% imshow(I);
-% rectangle('Position', [m_center(1)-x_length/2, m_center(2)-y_length/2, x_length, y_length], 'EdgeColor', 'b', 'LineWidth', 2);
+m_center = (props.Centroid);
+figure()
+imshow(I);
+rectangle('Position', [m_center(1)-x_length/2, m_center(2)-y_length/2, x_length, y_length], 'EdgeColor', 'b', 'LineWidth', 2);
 
 
 
