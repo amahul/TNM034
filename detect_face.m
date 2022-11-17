@@ -24,10 +24,13 @@ imshow(mouth_diff);
 
 figure()
 eye_props = regionprops(logical(eye_diff),'centroid', 'MajoraxisLength', 'MinoraxisLength')
-centroids = cat(1, eye_props.Centroid)
+
 mouth_props = regionprops(logical(mouth_diff),'centroid', 'MajoraxisLength', 'MinoraxisLength')
-centroids = cat(1, mouth_props.Centroid)
+
 imshow(eye_diff);
+
+face_boundary(eye_props, mouth_props);
+
 res = "temp";
 
 end
