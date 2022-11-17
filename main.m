@@ -7,7 +7,7 @@ img=imread("images/DB0/db0_3.jpg");
 % 
 % mask_im = hybrid_eye(img);
 % 
-% face_mask = faceMask(img);
+% face_mask = face_mask(img);
 % figure();
 % imshow(face_mask);
 
