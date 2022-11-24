@@ -74,6 +74,3 @@ y_length = props.MinorAxisLength;
 % figure()
 % imshow(I);
 % rectangle('Position', [m_center(1)-x_length/2, m_center(2)-y_length/2, x_length, y_length], 'EdgeColor', 'b', 'LineWidth', 2);
-
-
-

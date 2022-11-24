@@ -47,6 +47,6 @@ binaryImg = imfill(binaryImg, 'holes');
 % binaryImg = imerode(binaryImg, se);
 % binaryImg = imerode(binaryImg, se);
 
-imshow(binaryImg);
+% imshow(binaryImg);
 end
 
