@@ -1,4 +1,4 @@
-function [binaryImg] = faceMask(inputImg)
+function [binaryImg] = face_mask(inputImg)
 %funkar inte helt, den får med bakgrunden i vissa bilder
 
 %to binary image

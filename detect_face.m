@@ -23,9 +23,9 @@ imshow(mouth_diff);
 %% Get information about white objects
 
 figure()
-eye_props = regionprops(logical(eye_diff),'centroid', 'MajoraxisLength', 'MinoraxisLength')
+eye_props = regionprops(logical(eye_diff),'centroid', 'MajoraxisLength', 'MinoraxisLength');
 
-mouth_props = regionprops(logical(mouth_diff),'centroid', 'MajoraxisLength', 'MinoraxisLength')
+mouth_props = regionprops(logical(mouth_diff),'centroid', 'MajoraxisLength', 'MinoraxisLength');
 
 imshow(eye_diff);
 

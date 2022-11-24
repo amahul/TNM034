@@ -1,7 +1,7 @@
 function [out_image_illum] = eye_map(in_image)
 
 %Test
-%in_image = imread("image_0253.jpg");
+%in_image = imread("images/DB0/db0_1.jpg");
 
 %Convert RGB color values to YCbCr color space
 chroma_img = rgb2ycbcr(in_image);
@@ -36,11 +36,7 @@ EyeMap = uint8(255 * mat2gray(EyeMap));
 
 out_image_illum = imdilate(EyeMap,SE);
 
-
-
-
-
-
+%imshow(out_image_illum)
 
 
 
