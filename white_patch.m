@@ -1,4 +1,4 @@
-function outImage = whitePatch(img)
+function outImage = white_patch(img)
 %   Detailed explanation goes here
 
 % Split image to r, g and b channels
@@ -28,8 +28,8 @@ r_sensor = alpha.*r;
 g_sensor = g;
 b_sensor = beta.*b;
 
-%outImage = cat(3, r_sensor,g_sensor,b_sensor);
-outImage = img;
+outImage = cat(3, r_sensor,g_sensor,b_sensor);
+%outImage = img;
 
 end
 

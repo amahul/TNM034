@@ -1,0 +1,58 @@
+% function skinImage = skin_detection(inputImg)
+% % Function to get a facemask with skin color
+% 
+% binaryImg = face_mask(inputImg);
+% 
+% %Multiplying the binary image with the original image
+% test = binaryImg.*im2double(inputImg);
+% 
+% skinImage = inputImg;
+% 
+% imshow(test);
+% 
+% end
+
+function skinImage = SkinDetection(InputImg)
+
+prob_image = zeros(256);
+
+for i = 1:nfiles
+  YCbCr = rgb2ycbcr(Im{i}); %%convert the first image in our folder to YCbCr.
+  [Y, Cb, Cr] = imsplit(YCbCr); %%split the image into Y, Cb and Cr.'
+  
+  if i == 1
+     disp(Y) 
+  end
+  
+  arrayCb = Cb';
+  arrayCb = arrayCb(:)';
+  arrayCr = Cr';
+  arrayCr = arrayCr(:)';
+  arrayY = Y';
+  arrayY = arrayY(:)';
+  
+  pixels_rejected = 0;
+  pixels = 0;
+  
+  for k = 1:numel(arrayCr)
+      
+      if arrayY(k) < 0.92 %%White pixels have value 0.9216
+        pixels = pixels + 1;
+        prob_image(round(arrayCb(k)*255), round(arrayCr(k)*255)) = prob_image(round(arrayCb(k)*255), round(arrayCr(k)*255)) + 1;
+      else
+        pixels_rejected = pixels_rejected + 1;
+      end
+     
+  end
+  disp(pixels_rejected)
+  disp(pixels)
+  prob_image = prob_image./max(prob_image(:));
+  figure;
+  
+  
+end
+
+
+
+
+end

@@ -1,4 +1,4 @@
-function skinImage = skinDetection(inputImg)
+function skinImage = skin_detection(inputImg)
 % Function to get a facemask with skin color
 
 binaryImg = face_mask(inputImg);
@@ -11,3 +11,7 @@ skinImage = inputImg;
 imshow(test);
 
 end
+
+
+
+
