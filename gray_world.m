@@ -1,4 +1,4 @@
-function outImage = grayWorld(img)
+function outImage = gray_world(img)
 % Detailed explanation goes here
 % Lecture 2, slide 11, 12 and 13
 
@@ -25,5 +25,7 @@ b_sensor = beta*b;
 
 % Behövs detta?
 outImage = cat(3, r_sensor,g_sensor,b_sensor);
+
+imshow(outImage);
 
 end
