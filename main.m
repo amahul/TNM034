@@ -1,6 +1,6 @@
 %img=imread("images/DB0/db0_1.jpg");
 
-img=imread("images/DB2/il_09.jpg");
+img=imread("images/DB2/cl_16.jpg");
 % imshow(img)
 
 mm1 = mouth_map(img);
