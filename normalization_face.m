@@ -4,4 +4,5 @@ function [normImage] = normalization_face(inputImg)
 
 
 
+
 end
