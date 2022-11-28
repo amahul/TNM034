@@ -1,4 +1,4 @@
-function [centers] = face_boundary(eye_props, mouth_props)
+function [eyes, mouth] = face_boundary(eye_props, mouth_props)
 
 % 1. Check for luma variations and average gradient
 % 2. Geometry and orientation of the triangle
@@ -33,23 +33,37 @@ if(n_eyes > 2)
 else
     eyes = eye_centers;
 end
-eyes
+
 % Sort eyes so left eye is first
 eyes = sortrows(sort(eyes,1));
-eyes
 
+
+% Variables for finding the mouth that is closest to 
+% x-coordinate between eyes
+min_diff = Inf;
+
+% Save eye variables
+y1_eye = eye_centers(1,2);
+y2_eye = eye_centers(2,2);
+x1_eye = eye_centers(1,1); % left eye
+x2_eye = eye_centers(2,1); % right eye
+between_eyes = (x1_eye+x2_eye)/2;
 if(n_mouths > 1)
     for j = 1:n_mouths
         x_mouth = mouth_centers(i:1);
         y_mouth = mouth_centers(i,2);
-        y1_eye = eye_centers(1,2);
-        y2_eye = eye_centers(2,2);
-        x1_eye = eye_centers(1,1); % left eye
-        x2_eye = eye_centers(2,1); % right eye
-    
+       
+        
+        % Only keep mouth with y-value smaller than eyes
+        % and x-value between eyes x-value
         if(y_mouth > y1_eye && y_mouth > y2_eye)
             if(x_mouth > x1_eye && x_mouth < x2_eye)
-                mouth_candidates = mouth_centers(i,:);
+                
+                diff = abs(between_eyes-x_mouth);
+                if(diff < min_diff)
+                    min_diff = diff;
+                    mouth = mouth_centers(i,:);
+                end
             end        
         end
     
@@ -59,11 +73,10 @@ if(n_mouths > 1)
             
     end
 else
-    mouth_candidates = mouth_centers(1,:);
+    mouth = mouth_centers(1,:);
 end
 
-mouth = mouth_candidates(1,:);
 
-centers = cat(eyes, mouth);
+
 
 
