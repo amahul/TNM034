@@ -44,9 +44,9 @@ r = 10;
 SE = strel('square', r); % spherical structuring element
 m_map = imdilate(m_map,SE); % DILATION:
 
-% 
-figure()
-imshow(m_map)
+% % 
+% figure()
+% imshow(m_map)
 
 target = 256:-4:4;
 m_map_stretched = histeq(m_map,target);
@@ -56,28 +56,32 @@ m_map_stretched = histeq(m_map,target);
 m_map_BW = imbinarize(m_map_stretched, 0.8);
 
 
-figure()
-imshow(m_map_BW)
+% figure()
+% imshow(m_map_BW)
 
 % SE2 = strel('sphere', ceil(2*r/3)); % spherical structuring element
 % erodedBW = imerode(m_map_BW,SE2);
 % figure()
 % imshow(erodedBW)
-
-m_map = bwareafilt(m_map_BW,1); % only keep one white object
+%% Remove all white objects outside face mask on eye_map and mouth_map
+% face_mask_res = face_mask(I);
+% face_mask_inverse = imcomplement(face_mask_res);
+% figure()
+% imshow(face_mask_inverse);
+% 
+% mouth_diff = m_map_BW - face_mask_inverse;
+%% Get properties of white object
+% m_map1 = bwareafilt(mouth_diff,1); % only keep one white object
 % figure()
 % imshow(m_map)
 % Find center and width of white area
-props = regionprops(m_map,'centroid', 'MajoraxisLength', 'MinoraxisLength');
+props = regionprops(m_map_BW,'centroid', 'MajoraxisLength', 'MinoraxisLength');
 x_length = props.MajorAxisLength;
 y_length = props.MinorAxisLength;
 m_center = props.Centroid;
 
 % Draw image with rectangle
 % m_center = round(props.Centroid);
-figure()
-imshow(I);
-rectangle('Position', [m_center(1)-x_length/2, m_center(2)-y_length/2, x_length, y_length], 'EdgeColor', 'b', 'LineWidth', 2);
-
-
-
+% figure()
+% imshow(I);
+% rectangle('Position', [m_center(1)-x_length/2, m_center(2)-y_length/2, x_length, y_length], 'EdgeColor', 'b', 'LineWidth', 2);

@@ -1,4 +1,4 @@
-function [res] = detect_face(I)
+function [eye_centers, mouth_center] = detect_face(I)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -16,9 +16,11 @@ face_mask_inverse = imcomplement(face_mask_res);
 % imshow(face_mask_inverse);
 
 eye_diff = mask_im - face_mask_inverse;
-mouth_diff = mm - face_mask_inverse;
-figure()
-imshow(mouth_diff);
+class(mm)
+class(face_mask_inverse)
+mouth_diff = double(mm) - face_mask_inverse;
+% figure()
+% imshow(mouth_diff);
 
 %% Get information about white objects
 
@@ -27,14 +29,8 @@ eye_props = regionprops(logical(eye_diff),'centroid', 'MajoraxisLength', 'Minora
 
 mouth_props = regionprops(logical(mouth_diff),'centroid', 'MajoraxisLength', 'MinoraxisLength');
 
-imshow(eye_diff);
+% imshow(eye_diff);
 
-face_boundary(eye_props, mouth_props);
-
-res = "temp";
-% figure();
-% face = eye_diff + mouth_diff;
-% imshow(face);
-
+[eye_centers, mouth_center] = face_boundary(eye_props, mouth_props);
 
 end

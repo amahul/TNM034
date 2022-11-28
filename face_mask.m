@@ -53,8 +53,6 @@ binary_img = bwareafilt(binary_img,1);
 % binaryImg = imerode(binaryImg, se);
 % binaryImg = imerode(binaryImg, se);
 
-%imshow(binaryImg);
-
-
+% imshow(binaryImg);
 end
 
