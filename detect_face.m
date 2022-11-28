@@ -1,4 +1,4 @@
-function [res] = detect_face(I)
+function [eye_centers, mouth_center] = detect_face(I)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -31,8 +31,6 @@ mouth_props = regionprops(logical(mouth_diff),'centroid', 'MajoraxisLength', 'Mi
 
 % imshow(eye_diff);
 
-face_boundary(eye_props, mouth_props);
-
-res = "temp";
+[eye_centers, mouth_center] = face_boundary(eye_props, mouth_props);
 
 end
