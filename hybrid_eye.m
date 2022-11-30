@@ -41,11 +41,11 @@ hybrid_image = ill_and_colour | ill_and_edge | colour_and_edge;
 % figure()
 % imshow(hybrid_image);
 % rectangle('Position', [m_center(1)-x_length/2, m_center(2)-y_length/2, x_length, y_length], 'EdgeColor', 'b', 'LineWidth', 2);
-
-info = regionprops(hybrid_image,'Boundingbox') ;
-imshow(hybrid_image)
-hold on
-for k = 1 : length(info)
-     BB = info(k).BoundingBox;
-     rectangle('Position', [BB(1),BB(2),BB(3),BB(4)],'EdgeColor','r','LineWidth',2) ;
-end
+% 
+% info = regionprops(hybrid_image,'Boundingbox') ;
+% imshow(hybrid_image)
+% hold on
+% for k = 1 : length(info)
+%      BB = info(k).BoundingBox;
+%      rectangle('Position', [BB(1),BB(2),BB(3),BB(4)],'EdgeColor','r','LineWidth',2) ;
+% end
