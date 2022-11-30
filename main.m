@@ -2,9 +2,9 @@ img=imread("images/DB1/db1_03.jpg");
 % imshow(img)
 
 % mm1 = mouth_map(img);
-
+% 
 % figure();
-% imshow(mm);
+% imshow(mm1);
 % 
 % mask_im = hybrid_eye(img);
 % 
