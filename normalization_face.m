@@ -74,6 +74,7 @@ imshow(normImage);
 
 
 %Crop the image so that the eyes are at the same position
+crop_im = crop_face(right_eye, left_eye, inputImg);
 
 
 

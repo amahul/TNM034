@@ -15,22 +15,27 @@ face_mask_inverse = imcomplement(face_mask_res);
 % figure()
 % imshow(face_mask_inverse);
 
-eye_diff = mask_im - face_mask_inverse;
-class(mm)
-class(face_mask_inverse)
-mouth_diff = double(mm) - face_mask_inverse;
+eye_diff = imbinarize(mask_im - face_mask_inverse);
+% figure()
+% imshow(eye_diff)
+mouth_diff = imbinarize(mm - face_mask_inverse);
 % figure()
 % imshow(mouth_diff);
 
 %% Get information about white objects
 
-% figure()
-eye_props = regionprops(logical(eye_diff),'centroid', 'MajoraxisLength', 'MinoraxisLength')
+eye_props = regionprops(eye_diff,'centroid', 'MajoraxisLength', 'MinoraxisLength', 'Orientation');
 
-mouth_props = regionprops(logical(mouth_diff),'centroid', 'MajoraxisLength', 'MinoraxisLength')
+mouth_props = regionprops(mouth_diff,'centroid', 'MajoraxisLength', 'MinoraxisLength', 'Orientation');
 
 % imshow(eye_diff);
 
-[eye_centers, mouth_center] = face_boundary(eye_props, mouth_props);
+[eye_centers, mouth_center] = face_boundary(eye_props, mouth_props, I);
+
+% figure()
+% imshow(I);
+% rectangle('Position', [eye_centers(1,1), eye_centers(1,2), 15, 15], 'EdgeColor', 'b', 'LineWidth', 2);
+% rectangle('Position', [eye_centers(2,1), eye_centers(2,2), 15, 15], 'EdgeColor', 'b', 'LineWidth', 2);
+
 
 end
