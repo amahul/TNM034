@@ -92,7 +92,7 @@ if(n_eyes > 2)
             
             if abs(dist1-dist2) < min_dist && dist_eyes(index) < dist1 && dist_eyes(index) < dist2
                 disp("Dist dif: f" + abs(dist1-dist2));
-                min_dist = abs(dist1-dist1);
+                min_dist = abs(dist1-dist2);
                 
                 eyes = eye_candidates(:,:,index);
             end
