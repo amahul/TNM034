@@ -16,8 +16,11 @@ face_mask_inverse = imcomplement(face_mask_res);
 % imshow(face_mask_inverse);
 
 eye_diff = imbinarize(mask_im - face_mask_inverse);
-% figure()
-% imshow(eye_diff)
+eye_diff = bwareafilt(eye_diff, 7);
+
+figure()
+imshow(eye_diff)
+axis on
 mouth_diff = imbinarize(mm - face_mask_inverse);
 % figure()
 % imshow(mouth_diff);

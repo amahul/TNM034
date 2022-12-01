@@ -35,11 +35,11 @@ rectangle('Position', [m_center(1)-x_length/2, m_center(2)-y_length/2, x_length,
 %% Find values for all eye_candidates 
 n_eyes = size(eye_centers,1);
 
-dist_eyes = zeros(n_eyes); % Kanske byta ut n_eyes
-dist_em_1 = zeros(n_eyes);
-dist_em_2 = zeros(n_eyes);
+dist_eyes = zeros(n_eyes,1); % Kanske byta ut n_eyes
+dist_em_1 = zeros(n_eyes,1);
+dist_em_2 = zeros(n_eyes,1);
 eyes = zeros(2);
-eye_candidates = zeros(2,2,n_eyes*2);
+eye_candidates = zeros(2,2,n_eyes);
 index = 0;
 x_mouth = m_center(1);
 y_mouth = m_center(2);
@@ -58,20 +58,20 @@ if(n_eyes > 2)
             
             % Only saves eyes with smaller y-value than mouth
             % and one eye on both sides of mouth
-%             disp("Y_mouth: " + y_mouth + " y1: " + y1 + " y2: " + y2)
-            
+%             disp("Y_mouth: " + y_mouth + " y1: " + y1 + " y2: " + y2)            
             if(y_mouth > y1 && y_mouth > y2)                
 %                 disp("X_mouth: " + x_mouth + " x1: " + x1 + " x2: " + x2)
                 if(x1 < x_mouth && x_mouth < x2)
                     % Save variables to keep track
                     index = index + 1;
-                    disp("Added " + tempeyes)
+%                     disp("Added ")
+                    tempeyes
                     eye_candidates(:,:,index) = tempeyes;
-                    
-                    
-                    dist_eyes(index) = abs(x1-x2);
-                    dist_em_1(index) = sqrt((x_mouth-x1)^2+(y_mouth-y1)^2);
-                    dist_em_2(index) = sqrt((x_mouth-x2)^2+(y_mouth-y2)^2);            
+                                       
+%                     dist_eyes(index) = abs(x1-x2);
+                    dist_eyes(index) = sqrt((x1-x2)^2+(y1-y2)^2);
+                    dist_em_1(index) = sqrt((x1-x_mouth)^2+(y_mouth-y1)^2)
+                    dist_em_2(index) = sqrt((x2-x_mouth)^2+(y_mouth-y2)^2)            
                     
                 end
             end 
@@ -80,21 +80,26 @@ if(n_eyes > 2)
 else
     eyes = eye_centers;
 end
+dist_em_1
+dist_em_2
 
 %% Save only 2 eye candidates
 min_dist = Inf;
+index
 if(n_eyes > 2)
     for i = 1:index
-        for j = i+1:index
+        for j = i:index
             dist1 =  dist_em_1(i);
             dist2 =  dist_em_2(j);
-
+            disp("Dist1: " + dist1 + " Dist2: " + dist2)
+            disp("Dist between em1 em2: " + abs(dist1-dist2))
+            disp("Dist_eyes " + dist_eyes(i))
             
-            if abs(dist1-dist2) < min_dist && dist_eyes(index) < dist1 && dist_eyes(index) < dist2
-                disp("Dist dif: f" + abs(dist1-dist2));
-                min_dist = abs(dist1-dist1);
+            if abs(dist1-dist2) < min_dist && dist_eyes(i) < dist1 && dist_eyes(i) < dist2
+                disp("Dist diff: " + abs(dist1-dist2));
+                min_dist = abs(dist1-dist2);
                 
-                eyes = eye_candidates(:,:,index);
+                eyes = eye_candidates(:,:,i);
             end
         end
     end
@@ -112,4 +117,3 @@ rectangle('Position', [eyes(2,1)-8, eyes(2,2)-8, 16, 16], 'EdgeColor', 'b', 'Lin
 % y2_eye = eye_centers(2,2);
 % x1_eye = eye_centers(1,1); % left eye
 % x2_eye = eye_centers(2,1); % right eye
-% 
