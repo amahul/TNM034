@@ -1,26 +1,12 @@
-function [normImage] = normalization_face(inputImg)
+function [norm_image] = normalization_face(input_img)
 %Normalize the images, rotation, scaling, tone-value and same eye height
+[eye_centers, mouth_center] = detect_face(input_img);
+eye_left = eye_centers(1,:);
+eye_right = eye_centers(2,:);
 
+rotated_img = rotation(input_img, eye_left, eye_right);
 
-%rotate the image so that the eyes are at equal height
-
-%Find what angle we should rotate
-%Hitta x-avståndet mellan ögonen
-    %(a) distance_in_x = eyeLeft(x-pos) - eyeRight(x-pos)
-%Hitta y-avståndet mellan ögonen
-    %(b) distance_in_y = eyeLeft(y-pos) - eyeRight(y-pos)
-
-%Hitta hypotenusan för att få en triangel
-    %(h) hypo = hypot(a, b);
-%Använd trig-funktion för att få fram vinkeln
-    %rotation_angle = arcsin(b/h);
-
-%if left eye is higher than right eye: 
-    %rotate coutner-clockwise
-%else if right eye is higher than left eye
-    %rotate clockwise
-
-
+norm_image = rotated_img;
 %Crop the image so that the eyes are at the same position
 
 
