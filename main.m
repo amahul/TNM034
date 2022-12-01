@@ -1,4 +1,4 @@
-img=imread("images/DB1/db1_03.jpg");
+img=imread("images/DB1/db1_02.jpg");
 % imshow(img)
 
 % mm1 = mouth_map(img);

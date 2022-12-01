@@ -6,12 +6,14 @@ function [eye_centers, mouth_center] = detect_face(I)
 % figure()
 % imshow(mm);
 
+
 mask_im = hybrid_eye(I);
 % figure()
 % imshow(mask_im);
 %% Remove all white objects outside face mask on eye_map and mouth_map
 face_mask_res = face_mask(I);
 face_mask_inverse = imcomplement(face_mask_res);
+
 % figure()
 % imshow(face_mask_inverse);
 
