@@ -1,6 +1,6 @@
 % I is the input image 
 % returns mouth_map and center of mouth 
-function [m_map] = mouth_map(I)
+function [m_map_BW] = mouth_map(I)
 %% Prepare variables
 % Convert RGB image to YCbCr Components
 YCbCr = rgb2ycbcr(I);
@@ -67,21 +67,22 @@ m_map_BW = imbinarize(m_map_stretched, 0.8);
 % face_mask_res = face_mask(I);
 % face_mask_inverse = imcomplement(face_mask_res);
 % figure()
-% imshow(face_mask_inverse);
-% 
+% imshow(m_map_BW);
+
 % mouth_diff = m_map_BW - face_mask_inverse;
 %% Get properties of white object
-% m_map1 = bwareafilt(mouth_diff,1); % only keep one white object
+m_map_BW = bwareafilt(m_map_BW,5); % keep 5 largest objects
 % figure()
-% imshow(m_map)
-% Find center and width of white area
-props = regionprops(m_map_BW,'centroid', 'MajoraxisLength', 'MinoraxisLength');
-x_length = props.MajorAxisLength;
-y_length = props.MinorAxisLength;
-m_center = props.Centroid;
-
-% Draw image with rectangle
-% m_center = round(props.Centroid);
+% imshow(m_map1)
+% 
+% % Find center and width of white area
+% props = regionprops(m_map1,'centroid', 'MajoraxisLength', 'MinoraxisLength')
+% x_length = props.MajorAxisLength;
+% y_length = props.MinorAxisLength;
+% m_center = props.Centroid;
+% 
+% % Draw image with rectangle
+% % m_center = round(props.Centroid);
 % figure()
 % imshow(I);
 % rectangle('Position', [m_center(1)-x_length/2, m_center(2)-y_length/2, x_length, y_length], 'EdgeColor', 'b', 'LineWidth', 2);
