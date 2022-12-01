@@ -15,7 +15,7 @@ for i = 1:length(all_files)
     img = rgb2gray(norm_face);
 
     % x vector
-    x_i = crop_face(right_eye, left_eye, img);
+    x_i = crop_face(right_eye, left_eye, img)
     
     
 end
