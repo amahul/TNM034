@@ -1,4 +1,4 @@
-img=imread("images/DB1/db1_08.jpg");
+img=imread("images/DB1/db1_1.jpg");
 
 size(img)
 % imshow(img)
