@@ -70,7 +70,7 @@ scaledImg  = imresize(rotateImg, skalfaktor);
 
 %Crop image
 %croppedImg = imcrop(rotateImg, [250 350 250 300]);
-croppedImg = imcrop(scaledImg, [(x_center+20-25) (y_center-50) ( wanted_dist+20-25) 300]);
+croppedImg = imcrop(scaledImg, [(x_center-50) (y_center-200) wanted_dist+50 300]);
 %croppedImg = imcrop(rotateImg, [213-50 213-50 213+115+50 100])
 
 normImage = croppedImg;
