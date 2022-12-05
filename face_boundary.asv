@@ -4,10 +4,10 @@ function [eyes, mouth] = face_boundary(eye_props, mouth_props, I)
 % 3. The presence of a face boundary around thetriangle
 %% Save variables from regionprops
 eye_centers = cat(1, eye_props.Centroid);
-mouth_centers = cat(1, mouth_props.Centroid)
-mouth_orientations = cat(1, mouth_props.Orientation)
-x_lengths = cat(1,mouth_props.MajorAxisLength)
-y_lengths = cat(1,mouth_props.MinorAxisLength)
+mouth_centers = cat(1, mouth_props.Centroid);
+mouth_orientations = cat(1, mouth_props.Orientation);
+x_lengths = cat(1,mouth_props.MajorAxisLength);
+y_lengths = cat(1,mouth_props.MinorAxisLength);
 
 % avståndet från mun till båda ögon ska vara lika
 % Avståndet mellan mun och ögon ska vara större än mellan ögonen
@@ -35,14 +35,14 @@ rectangle('Position', [m_center(1)-x_length/2, m_center(2)-y_length/2, x_length,
 %% Find values for all eye_candidates 
 n_eyes = size(eye_centers,1);
 
-dist_eyes = zeros(n_eyes); % Kanske byta ut n_eyes
-dist_em_1 = zeros(n_eyes);
-dist_em_2 = zeros(n_eyes);
+dist_eyes = zeros(n_eyes,1); % Kanske byta ut n_eyes
+dist_em_1 = zeros(n_eyes,1);
+dist_em_2 = zeros(n_eyes,1);
 eyes = zeros(2);
-eye_candidates = zeros(2,2,n_eyes*2);
+eye_candidates = zeros(2,2,n_eyes);
 index = 0;
-x_mouth = mouth_centers(1);
-y_mouth = mouth_centers(2);
+x_mouth = m_center(1);
+y_mouth = m_center(2);
 % If we have more than 2 eye candidates
 if(n_eyes > 2)
     % Loop through eye candidates
@@ -58,18 +58,27 @@ if(n_eyes > 2)
             
             % Only saves eyes with smaller y-value than mouth
             % and one eye on both sides of mouth
-            disp("Y_mouth: " + y_mouth + " y1: " + y1 + " y2: " + y2)
-            disp("X_mouth: " + x_mouth + " x1: " + x1 + " x2: " + x2)
-            if(y_mouth < y1 && y_mouth < y2)
-                if(x_mouth < x1 && x_mouth < x2)
+%             disp("Y_mouth: " + y_mouth + " y1: " + y1 + " y2: " + y2)            
+            if(y_mouth > y1 && y_mouth > y2)                
+%                 disp("X_mouth: " + x_mouth + " x1: " + x1 + " x2: " + x2)
+                if(x1 < x_mouth && x_mouth < x2)
                     % Save variables to keep track
-                    eye_candidates(:,:,index) = tempeyes;
-                    disp("Added " + tempeyes)
-                    
-                    dist_eyes(index) = abs(x1-x2);
-                    dist_em_1(index) = sqrt((x_mouth-x1)^2+(y_mouth-y1)^2);
-                    dist_em_2(index) = sqrt((x_mouth-x2)^2+(y_mouth-y2)^2);            
                     index = index + 1;
+%                     disp("Added ")
+                    tempeyes
+                    eye_candidates(:,:,index) = tempeyes;                    
+                                       
+%                     dist_eyes(index) = abs(x1-x2);
+                    dist_eyes(index) = sqrt((x1-x2)^2+(y1-y2)^2);
+                    dist_em_1(index) = sqrt((x1-x_mouth)^2+(y_mouth-y1)^2);
+                    dist_em_2(index) = sqrt((x2-x_mouth)^2+(y_mouth-y2)^2);
+
+                    % Calculate angles of triangle
+%                     v1 = mouth-eyes(2,:) % Mouth to left eye
+%                     v2 = mouth-eyes(1,:) % Mouth to right eye
+%                     v3 = eyes(1,:)-eyes(2,:) % Eye to eye
+
+                    
                 end
             end 
         end
@@ -77,29 +86,46 @@ if(n_eyes > 2)
 else
     eyes = eye_centers;
 end
+% dist_em_1
+% dist_em_2
+
 
 %% Save only 2 eye candidates
 min_dist = Inf;
+index
 if(n_eyes > 2)
     for i = 1:index
-        for j = i+1:index
+        for j = i:index
             dist1 =  dist_em_1(i);
             dist2 =  dist_em_2(j);
+%             disp("Dist1: " + dist1 + " Dist2: " + dist2)
+%             disp("Dist between em1 em2: " + abs(dist1-dist2))
+%             disp("Dist_eyes " + dist_eyes(i))
 
-            
-            if abs(dist1-dist2) < min_dist && dist_eyes(index) < dist1 && dist_eyes(index) < dist2
-                disp("Dist dif: f" + abs(dist1-dist2));
-                min_dist = abs(dist1-dist1);
+            % Find minimun dist difference between em_1 and em_2
+            % Distance between eyes should be smaller than distance between
+            % eye and mouth
+            if abs(dist1-dist2) < min_dist && dist_eyes(i) < dist1 && dist_eyes(i) < dist2 && dist_eyes(i)            
+                disp("Dist diff: " + abs(dist1-dist2));
+                min_dist = abs(dist1-dist2);
                 
-                eyes = eye_candidates(:,:,index);
+                eyes = eye_candidates(:,:,i);
             end
         end
     end
 
 end
 
+v1 = m_center-eyes(2,:) % Mouth to left eye
+v2 = m_center-eyes(1,:)% Mouth to right eye
+v3 = eyes(2,:)-eyes(1,:) % Eye to eye
+
+a1 = rad2deg(subspace(v1,v2))
+a2 = rad2deg(subspace(v2,v3))
+a3 = rad2deg(subspace(v3,v1))
+
+vinkelsumma = a1+a2+a3
 % Sort eyes so left eye is first
-% eyes;
 % eyes = sortrows(sort(eyes,)
 rectangle('Position', [eyes(1,1)-8, eyes(1,2)-8, 16, 16], 'EdgeColor', 'b', 'LineWidth', 2);
 rectangle('Position', [eyes(2,1)-8, eyes(2,2)-8, 16, 16], 'EdgeColor', 'b', 'LineWidth', 2);
@@ -109,4 +135,3 @@ rectangle('Position', [eyes(2,1)-8, eyes(2,2)-8, 16, 16], 'EdgeColor', 'b', 'Lin
 % y2_eye = eye_centers(2,2);
 % x1_eye = eye_centers(1,1); % left eye
 % x2_eye = eye_centers(2,1); % right eye
-% 

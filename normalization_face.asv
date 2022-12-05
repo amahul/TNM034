@@ -94,23 +94,29 @@ axis on;
 
 %Find what angle we should rotate
 %Hitta x-avståndet mellan ögonen
-    %(a) distance_in_x = eyeLeft(x-pos) - eyeRight(x-pos)
+  distance_in_x = eye_left(:,1) - eye_right(:,1) %a
+  a = distance_in_x;
 %Hitta y-avståndet mellan ögonen
-    %(b) distance_in_y = eyeLeft(y-pos) - eyeRight(y-pos)
+  distance_in_y = eye_left(:,2) - eye_right(:,2) %b
+  b = 
 
 %Hitta hypotenusan för att få en triangel
-    %(h) hypo = hypot(a, b);
+  hypo = hypot(a, b); %h
 %Använd trig-funktion för att få fram vinkeln
-    %rotation_angle = arcsin(b/h);
+  rotation_angle = arcsin(b/h) %v
 
 %if left eye is higher than right eye: 
     %rotate coutner-clockwise
 %else if right eye is higher than left eye
     %rotate clockwise
 
+    if(eye_left(:,2) > eye_right(:,2))
+        norm_image = imrotate(input_img, -rotation_angle);
+    else
+        norm_image = imrotate(input_img, rotation_angle);
+    end
 
 %Crop the image so that the eyes are at the same position
-%crop_im = crop_face(right_eye, left_eye, inputImg);
 
 
 

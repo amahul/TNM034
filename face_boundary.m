@@ -4,10 +4,10 @@ function [eyes, mouth] = face_boundary(eye_props, mouth_props, I)
 % 3. The presence of a face boundary around thetriangle
 %% Save variables from regionprops
 eye_centers = cat(1, eye_props.Centroid);
-mouth_centers = cat(1, mouth_props.Centroid)
-mouth_orientations = cat(1, mouth_props.Orientation)
-x_lengths = cat(1,mouth_props.MajorAxisLength)
-y_lengths = cat(1,mouth_props.MinorAxisLength)
+mouth_centers = cat(1, mouth_props.Centroid);
+mouth_orientations = cat(1, mouth_props.Orientation);
+x_lengths = cat(1,mouth_props.MajorAxisLength);
+y_lengths = cat(1,mouth_props.MinorAxisLength);
 
 % avståndet från mun till båda ögon ska vara lika
 % Avståndet mellan mun och ögon ska vara större än mellan ögonen
@@ -30,7 +30,7 @@ m_center = mouth_centers(mouth_index,:);
 
 figure()
 imshow(I);
-rectangle('Position', [m_center(1)-x_length/2, m_center(2)-y_length/2, x_length, y_length], 'EdgeColor', 'b', 'LineWidth', 2);
+rectangle('Position', [m_center(1), m_center(2),2, 2], 'EdgeColor', 'b', 'LineWidth', 2);
 
 %% Find values for all eye_candidates 
 n_eyes = size(eye_centers,1);
@@ -66,12 +66,18 @@ if(n_eyes > 2)
                     index = index + 1;
 %                     disp("Added ")
                     tempeyes
-                    eye_candidates(:,:,index) = tempeyes;
+                    eye_candidates(:,:,index) = tempeyes;                    
                                        
 %                     dist_eyes(index) = abs(x1-x2);
                     dist_eyes(index) = sqrt((x1-x2)^2+(y1-y2)^2);
-                    dist_em_1(index) = sqrt((x1-x_mouth)^2+(y_mouth-y1)^2)
-                    dist_em_2(index) = sqrt((x2-x_mouth)^2+(y_mouth-y2)^2)            
+%                     dist_em_1(index) = sqrt((x1-x_mouth)^2+(y_mouth-y1)^2);
+%                     dist_em_2(index) = sqrt((x2-x_mouth)^2+(y_mouth-y2)^2);
+
+                    % Calculate angles of triangle
+%                     v1 = mouth-eyes(2,:) % Mouth to left eye
+%                     v2 = mouth-eyes(1,:) % Mouth to right eye
+%                     v3 = eyes(1,:)-eyes(2,:) % Eye to eye
+
                     
                 end
             end 
@@ -80,34 +86,43 @@ if(n_eyes > 2)
 else
     eyes = eye_centers;
 end
-dist_em_1
-dist_em_2
+% dist_em_1
+% dist_em_2
+
 
 %% Save only 2 eye candidates
 min_dist = Inf;
-index
 if(n_eyes > 2)
     for i = 1:index
-        for j = i:index
-            dist1 =  dist_em_1(i);
-            dist2 =  dist_em_2(j);
-            disp("Dist1: " + dist1 + " Dist2: " + dist2)
-            disp("Dist between em1 em2: " + abs(dist1-dist2))
-            disp("Dist_eyes " + dist_eyes(i))
+        y1 = eye_candidates(1,2,i);
+        y2 = eye_candidates(2,2,i);
+        x1 = eye_candidates(1,1,i);
+        x2 = eye_candidates(2,1,i);
+
+        dist1 = sqrt((x1-x_mouth)^2+(y_mouth-y1)^2);
+        dist2 = sqrt((x2-x_mouth)^2+(y_mouth-y2)^2);
+%         for j = i:index
+%             dist1 =  dist_em_1(i);
+%             dist2 =  dist_em_2(j);
+%             disp("Dist1: " + dist1 + " Dist2: " + dist2)
+%             disp("Dist between em1 em2: " + abs(dist1-dist2))
+%             disp("Dist_eyes " + dist_eyes(i))
+
+            % Find minimun dist difference between em_1 and em_2
+            % Distance between eyes should be smaller than distance between
+            % eye and mouth
+        if abs(dist1-dist2) < min_dist && dist_eyes(i) < dist1 && dist_eyes(i) < dist2 && dist1 < 1.5*dist_eyes(i) && dist2 < 1.5*dist_eyes(i)         
+            disp("Dist diff: " + abs(dist1-dist2));
+            min_dist = abs(dist1-dist2);
             
-            if abs(dist1-dist2) < min_dist && dist_eyes(i) < dist1 && dist_eyes(i) < dist2
-                disp("Dist diff: " + abs(dist1-dist2));
-                min_dist = abs(dist1-dist2);
-                
-                eyes = eye_candidates(:,:,i);
-            end
+            eyes = eye_candidates(:,:,i);
         end
+%         end
     end
 
 end
 
 % Sort eyes so left eye is first
-% eyes;
 % eyes = sortrows(sort(eyes,)
 rectangle('Position', [eyes(1,1)-8, eyes(1,2)-8, 16, 16], 'EdgeColor', 'b', 'LineWidth', 2);
 rectangle('Position', [eyes(2,1)-8, eyes(2,2)-8, 16, 16], 'EdgeColor', 'b', 'LineWidth', 2);
