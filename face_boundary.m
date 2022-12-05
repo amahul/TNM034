@@ -27,9 +27,9 @@ end
 x_length = x_lengths(mouth_index);
 y_length = y_lengths(mouth_index);
 m_center = mouth_centers(mouth_index,:);
-
-figure()
-imshow(I);
+% 
+% figure()
+% imshow(I);
 rectangle('Position', [m_center(1)-x_length/2, m_center(2)-y_length/2, x_length, y_length], 'EdgeColor', 'b', 'LineWidth', 2);
 
 %% Find values for all eye_candidates 

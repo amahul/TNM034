@@ -30,7 +30,7 @@ b_sensor = beta.*b;
 
 outImage = cat(3, r_sensor,g_sensor,b_sensor);
 %outImage = img;
-imshow(outImage);
+% imshow(outImage);
 
 end
 

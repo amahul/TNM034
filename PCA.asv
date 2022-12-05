@@ -1,25 +1,53 @@
+function[i] = PCA()
+
 %1 Collect faces for training
-file_dir = fullfile('./DB0', '*.jpg');
-all_files = dir(file_dir);
+
+images = dir("images/DB1/*.jpg");
 
 %1 Normalization function
-for i = 1:length(all_files)
-
-    file_name = fullfile(all_files(i).folder, all_files(i).name);
-    img = imread(file_name);
+for i = 1:length(images)
+    img = imread("images/DB1/" + images(i).name);
+ 
+    figure()
+    imshow(img)
     
+    [eye_centers, mouth_center] = detect_face(img);
+    left_eye = eye_centers(1,:);
+    right_eye = eye_centers(2,:);
+
     %Normalize face
     %find eye coordinates for left and right
-    norm_face = normalization_face(left_eye, right_eye, img);
+%     norm_face = normalization_face(left_eye, right_eye, img);
 
-    img = rgb2gray(norm_face);
-
-    % x vector
-    x_i = crop_face(right_eye, left_eye, img);
-
-    
+%   %Grayscale
+%     img = rgb2gray(norm_face);
+%     % x vector
+%     %img = reshape(img)
+   
+%     img = reshape(img,[],1);
+    %Face vector
+%     X(i,:) = img;
+%     imshow(X)
 end
 
+%Average face vector
+average_v = 1/(lenght(images) * sum(X));
+
+%Subtract mean face
+A = X - average_v;
+%Covariance matrix
+[eVector, eValue] = eig(transpose(A).* A);
+u_i = A * eVector;
+
+%Daniel nämnde och hade det?
+for i = 1:size(u_i,2)
+    u_i(:,i) = u_i(:,i) / norm(u_i(:,i));
+end
+
+weight = u_i * A;
+
+
+i = average_v +  symsum(weight*u_i,i,1,16);
 
 
 %1 Same size n = rows x cols
@@ -40,5 +68,6 @@ end
 %6b Consider C = A' A instead
 
 %6c 
+
 
 
