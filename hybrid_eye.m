@@ -1,8 +1,8 @@
 function [hybrid_image] = hybrid_eye(in_image)
 
 % Test
-in_image = imread("images/DB1/db1_10.jpg");
-%in_image = white_patch(in_image);
+%in_image = imread("images/DB1/db1_10.jpg");
+% in_image = white_patch(in_image);
 
 out_image_illum = eye_map(in_image);
 out_image_colour = eye_map_colour(in_image);

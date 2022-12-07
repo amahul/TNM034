@@ -1,6 +1,4 @@
-img=imread("images/DB1/db1_09.jpg");
-
-size(img)
+img=imread("images/DB1/db1_08.jpg");
 % imshow(img)
 
 % mm1 = mouth_map(img);
@@ -15,3 +13,5 @@ size(img)
 % imshow(face_mask);
 
 detect_face(img);
+
+

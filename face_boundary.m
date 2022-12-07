@@ -29,7 +29,7 @@ y_length = y_lengths(mouth_index);
 m_center = mouth_centers(mouth_index,:);
 % 
 % figure()
-% imshow(I);
+imshow(I);
 rectangle('Position', [m_center(1)-x_length/2, m_center(2)-y_length/2, x_length, y_length], 'EdgeColor', 'b', 'LineWidth', 2);
 
 %% Find values for all eye_candidates 
@@ -65,7 +65,6 @@ if(n_eyes > 2)
                     % Save variables to keep track
                     index = index + 1;
 %                     disp("Added ")
-                    tempeyes
                     eye_candidates(:,:,index) = tempeyes;                    
                                        
 %                     dist_eyes(index) = abs(x1-x2);
