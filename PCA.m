@@ -25,7 +25,7 @@ for i = 1:length(images)
     %img = reshape(img)
    
     img = reshape(img,[],1);
-    Face vector
+    %Face vector
     X(i,:) = img;
     imshow(X)
 end

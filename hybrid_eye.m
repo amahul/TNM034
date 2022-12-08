@@ -23,6 +23,7 @@ hybrid_image = bwareafilt(hybrid_image, 8);
 
 figure();
 imshow(hybrid_image);
+axis on;
 
 %info = regionprops(hybrid_image,'Boundingbox') ;
 

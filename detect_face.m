@@ -17,7 +17,7 @@ face_mask_inverse = imcomplement(face_mask_res);
 % imshow(face_mask_inverse);
 
 eye_diff = imbinarize(mask_im - face_mask_inverse);
-[nrows, ncols] = size(eye_diff);
+[nrows, ~] = size(eye_diff);
 eye_diff(2/3*nrows:nrows,:) = 0; % Remove all objects in the 2/3 part below in image
 eye_diff = bwareaopen(eye_diff,30); % Remove small objects
 eye_diff = bwareafilt(eye_diff, 3); % Keep 7 largest objects

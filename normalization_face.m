@@ -1,8 +1,8 @@
 function [normImage] = normalization_face(left_eye, right_eye, inputImg)
 %Normalize the images, rotation, scaling, tone-value and same eye height
-[eye_centers, mouth_center] = detect_face(input_img);
-eye_left = eye_centers(1,:);
-eye_right = eye_centers(2,:);
+[eye_centers, mouth_center] = detect_face(inputImg);
+% eye_left = eye_centers(1,:);
+% eye_right = eye_centers(2,:);
 
 %-----Article: Eiggenfaces_SVD_muller---------
 % "one should ensure that the faces are normalized with 
@@ -11,7 +11,7 @@ eye_right = eye_centers(2,:);
 % intensity, etc."
 
 % % Find the distance between left and right eye
-dist_eyes_x = abs(left_eye(1)-right_eye(1))
+dist_eyes_x = abs(left_eye(1)-right_eye(1));
 dist_eyes_y = abs(left_eye(2)-right_eye(2));
 % Euclidian distance between two points
 hypotenuse = hypot(dist_eyes_x, dist_eyes_y);
@@ -27,22 +27,23 @@ angleEye = rad2deg(acos(dist_eyes_x/hypotenuse));
 %rectangle('Position', [left_eye(:,1), left_eye(:,2), 15,15], 'EdgeColor', 'b', 'LineWidth', 2);
 
 
-% center image
+%center image
 size(inputImg)
-[ty, tx, tz] = size(inputImg); % [pixel in x, pixel in y, rgb]
-x_center = tx/2
-y_center = ty/2
+[ty, tx, ~] = size(inputImg); % [pixel in x, pixel in y, rgb]
+x_center = tx/2;
+y_center = ty/2;
 
-dist_x = round(abs(x_center-left_eye(1)))
-dist_y = round(abs(y_center-left_eye(2)))
+dist_x = round(abs(x_center-left_eye(1)));
+dist_y = round(abs(y_center-left_eye(2)));
+% 
+% pos_eyeX = left_eye(1)
+% pos_eyeY = left_eye(2)
+% 
 
-pos_eyeX = left_eye(1)
-pos_eyeY = left_eye(2)
 
-
-
- paddImg = padarray(inputImg,[dist_x dist_y],0,'both'); %padding
- translate =  imtranslate(paddImg, [dist_x, dist_y]);
+paddImg = padarray(inputImg,[dist_x, dist_y],0,'both'); %padding
+translate_img =  imtranslate(paddImg, [dist_x, dist_y]);
+% imshow(translate_img)
 
  %testImg = translate(x_center -10: x_center +10, y_center-10:y_center+10);
  
@@ -56,47 +57,44 @@ pos_eyeY = left_eye(2)
 % Correct the eye position 
 if (left_eye(2) > right_eye(2)) %left eye is higher than right eye
 
-    rotateImg = imrotate(translate,-angleEye, 'bicubic'); %rotate the padded image correct
+    rotate_img = imrotate(translate_img,-angleEye, 'bicubic'); %rotate the padded image correct
 
 else %right eye is higher than left eye
      
-    rotateImg = imrotate(translate,angleEye, 'bicubic');
+    rotate_img = imrotate(translate_img,angleEye, 'bicubic');
 
 end
 
+% imshow(rotate_img)
 
 %Scale image to get same distance between the eyes
-wanted_dist = 115;
+eye_dist = 115;
 %skalfaktor = dist_eyes_x/wanted_dist
-skalfaktor = wanted_dist/dist_eyes_x
-scaledImg  = imresize(rotateImg, skalfaktor);
+scale_fac = eye_dist/dist_eyes_x;
+scale_img  = imresize(rotate_img, scale_fac);
+
+figure()
+imshow(scale_img)
+axis on;
 
 %Crop image
-%croppedImg = imcrop(rotateImg, [250 350 250 300]);
-croppedImg = imcrop(scaledImg, [(x_center+20-25) (y_center-50) ( wanted_dist+20-25) 300]);
-%croppedImg = imcrop(rotateImg, [213-50 213-50 213+115+50 100])
 
-normImage = croppedImg;
-%normImage = croppedImg;
-imshow(normImage);
-%imshow(inputImg);
+crop_img = imcrop(scale_img, [(x_center+30) (y_center-100) (eye_dist+100) 290]);
+
+figure
+imshow(crop_img)
+axis on;
+
+% normImage = scaledImg;
+%normImage = crop_img;
+
+% imshow(normImage);
+% %imshow(inputImg);
 
 % mark the center of image
 %rectangle('Position', [x_center, y_center + dist_x, 115,15], 'EdgeColor', 'b', 'LineWidth', 2);
 
-
-axis on;
-
-
-
-
-
-
-
-norm_image = rotated_img;
+% norm_image = rotated_img;
 %Crop the image so that the eyes are at the same position
 %crop_im = crop_face(right_eye, left_eye, inputImg);
 
-
-
-end
