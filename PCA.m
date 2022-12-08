@@ -40,7 +40,7 @@ A_t = transpose(A);
 u_i = A * eigen_vector;
 
 %sorterar
-[eigen_value, order] = sort(diag(eigen_value),'descend');
+[~, order] = sort(diag(eigen_value),'descend');
 u_i = u_i(:,order);
 
 for i = 1:size(u_i,2)
@@ -53,25 +53,6 @@ save('weight.mat', 'weight' )
 save('average_face.mat','avg_face')
 save('eigen_face.mat', 'u_i')
 
-
-%1 Same size n = rows x cols
-
-%2 Each image as a n-vector x
-
-%3 Find average face vector
-
-%4 Subtract mean for each face vector
-
-%5 Find covariance matrix, C
-% C = A A'
-% A = n x M
-% C = c x c
-
-%6a Eigenvectors for C, need to reduce C
-
-%6b Consider C = A' A instead
-
-%6c 
 
 
 

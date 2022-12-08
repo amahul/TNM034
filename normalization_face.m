@@ -11,7 +11,6 @@ hypotenuse = hypot(dist_eyes_x, dist_eyes_y);
 angle_eye = rad2deg(acos(dist_eyes_x/hypotenuse));
 
 %% Find the center of the image
-size(input_img)
 [ty, tx, ~] = size(input_img); % [pixel in x, pixel in y, rgb]
 x_center = tx/2;
 y_center = ty/2;
@@ -38,7 +37,7 @@ end
 
 %% Scale image to get same distance between the eyes
 eye_dist = 115;
-scale_fac = eye_dist/dist_eyes_x
+scale_fac = eye_dist/dist_eyes_x;
 scale_img  = imresize(rotate_img, scale_fac);
 
 %calculate the new center point 
@@ -55,7 +54,7 @@ y_center_scaled = ty_scaled/2;
 % rectangle('Position', [x_center_scaled+107, y_center_scaled-8, 16, 16], 'EdgeColor', 'b', 'LineWidth', 2);
 
 %% Crop the image
-margin_x = 40
+margin_x = 40;
 crop_img = imcrop(scale_img, [(x_center_scaled-margin_x) (y_center_scaled-60) eye_dist+2*margin_x 230]);
 
 % figure
