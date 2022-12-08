@@ -57,7 +57,9 @@ y_center_scale = y/2
 %Crop image
 target_size = [380 280];
 window = centerCropWindow2d(size(center_img),target_size);
-crop_img = imcrop(center_img,window);
+
+% crop_img = imcrop(center_img,window);
+crop_img = imcrop(center_img, )
 
 figure()
 imshow(crop_img)

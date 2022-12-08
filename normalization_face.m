@@ -1,6 +1,6 @@
 function [normImage] = normalization_face(left_eye, right_eye, inputImg)
 %Normalize the images, rotation, scaling, tone-value and same eye height
-[eye_centers, mouth_center] = detect_face(inputImg);
+% [eye_centers, mouth_center] = detect_face(inputImg);
 % eye_left = eye_centers(1,:);
 % eye_right = eye_centers(2,:);
 
@@ -50,7 +50,7 @@ translate_img =  imtranslate(paddImg, [dist_x, dist_y]);
  %imshow(ty)
 
 % rectangle('Position', [dist_x, dist_y, 10,10], 'EdgeColor','b', 'LineWidth', 2); %%cindy test: retangle
- %rectangle('Position', [left_eye(:,1), left_eye(:,2), 15,15], 'EdgeColor', 'b', 'LineWidth', 2);
+ % rectangle('Position', [left_eye(:,1), left_eye(:,2), 15,15], 'EdgeColor', 'b', 'LineWidth', 2);
 
 
 
@@ -70,16 +70,24 @@ end
 %Scale image to get same distance between the eyes
 eye_dist = 115;
 %skalfaktor = dist_eyes_x/wanted_dist
-scale_fac = eye_dist/dist_eyes_x;
+scale_fac = eye_dist/dist_eyes_x
 scale_img  = imresize(rotate_img, scale_fac);
+
+[ty_scaled, tx_scaled, ~] = size(scale_img); % [pixel in x, pixel in y, rgb]
+x_center_scaled = tx_scaled/2;
+y_center_scaled = ty_scaled/2;
 
 figure()
 imshow(scale_img)
 axis on;
 
-%Crop image
+% Draw rectangle on eyes
+rectangle('Position', [x_center_scaled-8, y_center_scaled-8, 16,16], 'EdgeColor', 'b', 'LineWidth', 2);
+rectangle('Position', [x_center_scaled+107, y_center_scaled-8, 16, 16], 'EdgeColor', 'b', 'LineWidth', 2);
 
-crop_img = imcrop(scale_img, [(x_center+30) (y_center-100) (eye_dist+100) 290]);
+%Crop image
+margin_x = 40
+crop_img = imcrop(scale_img, [(x_center_scaled-margin_x) (y_center_scaled-60) eye_dist+2*margin_x 230]);
 
 figure
 imshow(crop_img)
