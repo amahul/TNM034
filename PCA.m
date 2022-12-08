@@ -30,6 +30,7 @@ X = im2double(X);
 %Average face vector, mean face
 avg_face = mean(X,2);
 img = reshape(avg_face, [231 196]);
+
 imshow(img)
 %Subtract mean face, each vector rep the difference
 A = X - avg_face; 
@@ -50,7 +51,7 @@ end
 weight = u_i' * A;
 
 save('weight.mat', 'weight' )
-save('average_face.mat','avg_face')
+save('average_face.mat','img')
 save('eigen_face.mat', 'u_i')
 
 
