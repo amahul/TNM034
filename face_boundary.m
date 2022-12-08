@@ -24,13 +24,13 @@ for i = 1:size(mouth_props,1)
 end
 
 %% Print rectangle for mouth on original image
-x_length = x_lengths(mouth_index);
-y_length = y_lengths(mouth_index);
+% x_length = x_lengths(mouth_index);
+% y_length = y_lengths(mouth_index);
 m_center = mouth_centers(mouth_index,:);
 % 
 % figure()
-imshow(I);
-rectangle('Position', [m_center(1)-x_length/2, m_center(2)-y_length/2, x_length, y_length], 'EdgeColor', 'b', 'LineWidth', 2);
+% imshow(I);
+% rectangle('Position', [m_center(1)-x_length/2, m_center(2)-y_length/2, x_length, y_length], 'EdgeColor', 'b', 'LineWidth', 2);
 
 %% Find values for all eye_candidates 
 n_eyes = size(eye_centers,1);
@@ -111,7 +111,7 @@ if(n_eyes > 2)
             % Distance between eyes should be smaller than distance between
             % eye and mouth
         if abs(dist1-dist2) < min_dist && dist_eyes(i) < dist1 && dist_eyes(i) < dist2 && dist1 < 1.5*dist_eyes(i) && dist2 < 1.5*dist_eyes(i)         
-            disp("Dist diff: " + abs(dist1-dist2));
+            %disp("Dist diff: " + abs(dist1-dist2));
             min_dist = abs(dist1-dist2);
             
             eyes = eye_candidates(:,:,i);
@@ -123,11 +123,5 @@ end
 
 % Sort eyes so left eye is first
 % eyes = sortrows(sort(eyes,)
-rectangle('Position', [eyes(1,1)-8, eyes(1,2)-8, 16, 16], 'EdgeColor', 'b', 'LineWidth', 2);
-rectangle('Position', [eyes(2,1)-8, eyes(2,2)-8, 16, 16], 'EdgeColor', 'b', 'LineWidth', 2);
-%% Find eye candidates
-% % Save eye variables
-% y1_eye = eye_centers(1,2);
-% y2_eye = eye_centers(2,2);
-% x1_eye = eye_centers(1,1); % left eye
-% x2_eye = eye_centers(2,1); % right eye
+% rectangle('Position', [eyes(1,1)-8, eyes(1,2)-8, 16, 16], 'EdgeColor', 'b', 'LineWidth', 2);
+% rectangle('Position', [eyes(2,1)-8, eyes(2,2)-8, 16, 16], 'EdgeColor', 'b', 'LineWidth', 2);
