@@ -13,17 +13,16 @@ face_mask_inverse = imcomplement(face_mask_res);
 eye_diff = imbinarize(mask_im - face_mask_inverse);
 [nrows, ~] = size(eye_diff);
 
-% Remove all objects in the 2/3 part below in image (false candidates)
-eye_diff(2/3*nrows:nrows,:) = 0; 
+eye_diff(2/3*nrows:nrows,:) = 0; % Remove all objects in the 2/3 part below in image
+eye_diff = bwareaopen(eye_diff,30); % Remove small objects
+eye_diff = bwareafilt(eye_diff, 3); % Keep 7 largest objects
 
-% Remove small objects
-eye_diff = bwareaopen(eye_diff,30); 
+% figure()
+% imshow(eye_diff)
 
-% Keep only 3 largest objects
-eye_diff = bwareafilt(eye_diff, 3); 
-
-% Remove all objects from mouth map that is outside face mask
 mouth_diff = imbinarize(mm - face_mask_inverse);
+% figure()
+% imshow(mouth_diff);
 
 %% Get information about white objects
 
@@ -31,11 +30,9 @@ eye_props = regionprops(eye_diff,'centroid', 'MajoraxisLength', 'MinoraxisLength
 
 mouth_props = regionprops(mouth_diff,'centroid', 'MajoraxisLength', 'MinoraxisLength', 'Orientation');
 
-%% Call face boundare to eliminate all false candidates
+% imshow(eye_diff);
 
 [eye_centers, mouth_center] = face_boundary(eye_props, mouth_props, I);
-
-%% DEBUG: Print eyes on input image
 
 % figure()
 % imshow(I);
