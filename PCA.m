@@ -23,17 +23,20 @@ for i = 1:length(images)
    
     img = reshape(img,[],1);
     %Face vector
-    X(i,:) = img;
+    X(:,i) = img;
 
 end
 
 %Average face vector
 average_v = 1./(length(images) * sum(X));
+imshow(reshape(average_v, [], width))
 
 %Subtract mean face
 A = double(X) - average_v;
+disp("Before eig")
 %Covariance matrix
-[eVector, eValue] = eig(A'* A);
+[eVector, ~] = eig(A'*A);
+disp("After eig")
 u_i = A * eVector;
 
 %Daniel nämnde och hade det?
@@ -41,9 +44,18 @@ for i = 1:size(u_i,2)
     u_i(:,i) = u_i(:,i) / norm(u_i(:,i));
 end
 
-weight = u_i * A;
+weight = u_i' * A;
 
-i = average_v +  symsum(weight*u_i,i,1,16);
+% i = average_v +  symsum(weight.*u_i,i,1,16);
+
+s = zeros(size(u_i,1),1);
+for i = 1:16
+    s = s + weight(i,1) * u_i(:,i);
+end
+
+L1 = average_v + s;
+imshow(L1)
+
 
 
 %1 Same size n = rows x cols
