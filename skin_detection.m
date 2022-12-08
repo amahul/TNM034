@@ -1,14 +1,11 @@
-function skinImage = skin_detection(inputImg)
+function skin_image = skin_detection(input_img)
 % Function to get a facemask with skin color
 
-binaryImg = face_mask(inputImg);
+% Binary Image
+binary_img = face_mask(input_img);
 
 %Multiplying the binary image with the original image
-test = binaryImg.*im2double(inputImg);
-
-skinImage = inputImg;
-
-imshow(test);
+skin_image = binary_img.*im2double(input_img);
 
 end
 

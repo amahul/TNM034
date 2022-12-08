@@ -1,5 +1,5 @@
 function outImage = white_patch(img)
-%   Detailed explanation goes here
+% Den funkar inte! Ta bort?
 
 % Split image to r, g and b channels
 r = img(:,:,1);
