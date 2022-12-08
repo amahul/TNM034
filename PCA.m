@@ -20,30 +20,38 @@ for i = 1:length(images)
     img = rgb2gray(norm_face);
     % x vector
     %img = reshape(img)
-   
+    
     img = reshape(img,[],1);
     %Face vector
-    X(i,:) = img;
-
+    X(:,i) = img;
 end
 
-%Average face vector
-average_v = 1./(length(images) * sum(X));
+X = im2double(X);
+%Average face vector, mean face
+avg_face = mean(X,2);
+img = reshape(avg_face, [231 196]);
+imshow(img)
+%Subtract mean face, each vector rep the difference
+A = X - avg_face; 
+A_t = transpose(A);
 
-%Subtract mean face
-A = double(X) - average_v;
 %Covariance matrix
-[eVector, eValue] = eig(A'* A);
-u_i = A * eVector;
+[eigen_vector, eigen_value] = eig(A_t*A);
+u_i = A * eigen_vector;
 
-%Daniel nämnde och hade det?
+%sorterar
+[eigen_value, order] = sort(diag(eigen_value),'descend');
+u_i = u_i(:,order);
+
 for i = 1:size(u_i,2)
     u_i(:,i) = u_i(:,i) / norm(u_i(:,i));
 end
 
-weight = u_i * A;
+weight = u_i' * A;
 
-i = average_v +  symsum(weight*u_i,i,1,16);
+save('weight.mat', 'weight' )
+save('average_face.mat','avg_face')
+save('eigen_face.mat', 'u_i')
 
 
 %1 Same size n = rows x cols
