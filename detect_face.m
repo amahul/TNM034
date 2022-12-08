@@ -33,7 +33,7 @@ mouth_props = regionprops(mouth_diff,'centroid', 'MajoraxisLength', 'MinoraxisLe
 
 %% Call face boundare to eliminate all false candidates
 
-[eye_centers, mouth_center] = face_boundary(eye_props, mouth_props, I);
+[eye_centers, mouth_center] = face_boundary(eye_props, mouth_props);
 
 %% DEBUG: Print eyes on input image
 
