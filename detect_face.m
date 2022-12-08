@@ -24,7 +24,7 @@ eye_diff = bwareafilt(eye_diff, 3); % Keep 7 largest objects
 
 % figure()
 % imshow(eye_diff)
-axis on
+
 mouth_diff = imbinarize(mm - face_mask_inverse);
 % figure()
 % imshow(mouth_diff);

@@ -10,9 +10,12 @@ hypotenuse = hypot(dist_eyes_x, dist_eyes_y);
 %% Find the angle between the eyes
 angle_eye = rad2deg(acos(dist_eyes_x/hypotenuse));
 
-%% Find the center of the image
-size(input_img)
-[ty, tx, ~] = size(input_img); % [pixel in x, pixel in y, rgb]
+% Find the angle between the eyes
+angleEye = rad2deg(acos(dist_eyes_x/hypotenuse));
+
+%center image
+size(inputImg)
+[ty, tx, ~] = size(inputImg); % [pixel in x, pixel in y, rgb]
 x_center = tx/2;
 y_center = ty/2;
 
@@ -27,8 +30,6 @@ padd_img = padarray(input_img,[dist_x, dist_y],0,'both'); %padding
 translate_img =  imtranslate(padd_img, [dist_x, dist_y]);
 % imshow(translate_img)
 
- %testImg = translate(x_center -10: x_center +10, y_center-10:y_center+10);
- 
 
 % Correct the eye position 
 if (left_eye(2) > right_eye(2)) %left eye is higher than right eye
@@ -46,27 +47,22 @@ end
 %Scale image to get same distance between the eyes
 eye_dist = 115;
 %skalfaktor = dist_eyes_x/wanted_dist
-scale_fac = eye_dist/dist_eyes_x
+scale_fac = eye_dist/dist_eyes_x;
 scale_img  = imresize(rotate_img, scale_fac);
 
 [ty_scaled, tx_scaled, ~] = size(scale_img); % [pixel in x, pixel in y, rgb]
 x_center_scaled = tx_scaled/2;
 y_center_scaled = ty_scaled/2;
 
-figure()
-imshow(scale_img)
-axis on;
-
 % Draw rectangle on eyes
-% rectangle('Position', [x_center_scaled-8, y_center_scaled-8, 16,16], 'EdgeColor', 'b', 'LineWidth', 2);
-% rectangle('Position', [x_center_scaled+107, y_center_scaled-8, 16, 16], 'EdgeColor', 'b', 'LineWidth', 2);
+rectangle('Position', [x_center_scaled-8, y_center_scaled-8, 16,16], 'EdgeColor', 'b', 'LineWidth', 2);
+rectangle('Position', [x_center_scaled+107, y_center_scaled-8, 16, 16], 'EdgeColor', 'b', 'LineWidth', 2);
 
 %Crop image
-margin_x = 40
+margin_x = 40;
 crop_img = imcrop(scale_img, [(x_center_scaled-margin_x) (y_center_scaled-60) eye_dist+2*margin_x 230]);
 
-figure
-imshow(crop_img)
-axis on;
-
+% figure
+% imshow(crop_img)
+% axis on;
 

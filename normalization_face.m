@@ -62,4 +62,3 @@ crop_img = imcrop(scale_img, [(x_center_scaled-margin_x) (y_center_scaled-60) ey
 % imshow(crop_img)
 % axis on;
 
-

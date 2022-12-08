@@ -8,9 +8,6 @@ images = dir("images/DB1/*.jpg");
 for i = 1:length(images)
     img = imread("images/DB1/" + images(i).name);
  
-    figure()
-    imshow(img)
-    
     [eye_centers, ~] = detect_face(img);
     left_eye = eye_centers(1,:);
     right_eye = eye_centers(2,:);
@@ -27,16 +24,16 @@ for i = 1:length(images)
     img = reshape(img,[],1);
     %Face vector
     X(i,:) = img;
-    imshow(X)
+
 end
 
 %Average face vector
-average_v = 1/(lenght(images) * sum(X));
+average_v = 1./(length(images) * sum(X));
 
 %Subtract mean face
-A = X - average_v;
+A = double(X) - average_v;
 %Covariance matrix
-[eVector, ~] = eig(transpose(A).* A);
+[eVector, eValue] = eig(A'* A);
 u_i = A * eVector;
 
 %Daniel nämnde och hade det?
@@ -45,7 +42,6 @@ for i = 1:size(u_i,2)
 end
 
 weight = u_i * A;
-
 
 i = average_v +  symsum(weight*u_i,i,1,16);
 

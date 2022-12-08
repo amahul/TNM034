@@ -20,10 +20,10 @@ colour_and_edge = out_image_colour & out_image_edge;
 
 hybrid_image = ill_and_colour | ill_and_edge | colour_and_edge;
 hybrid_image = bwareafilt(hybrid_image, 8);
-
-figure();
-imshow(hybrid_image);
-axis on;
+% 
+% figure();
+% imshow(hybrid_image);
+% axis on;
 
 %info = regionprops(hybrid_image,'Boundingbox') ;
 
