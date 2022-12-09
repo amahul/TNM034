@@ -8,13 +8,16 @@ mouth_orientations = cat(1, mouth_props.Orientation);
 %% Pick a mouth candidate depending on orientation of objects
 min_orientation_diff = Inf;
 mouth_index = 0;
-for i = 1:size(mouth_props,1)
-    diff = abs(mouth_orientations(i));
-    % Save mouth with orientation closest to 0 (vertical)
-    if(diff < min_orientation_diff)
-        min_orientation_diff = diff;
-        mouth = mouth_centers(i,:);
-        mouth_index = i;
+mouth = zeros(1,2);
+if(size(mouth_props,1) >= 1)
+    for i = 1:size(mouth_props,1)
+        diff = abs(mouth_orientations(i));
+        % Save mouth with orientation closest to 0 (vertical)
+        if(diff < min_orientation_diff)
+            min_orientation_diff = diff;
+            mouth = mouth_centers(i,:);
+            mouth_index = i;
+        end
     end
 end
 
@@ -68,8 +71,13 @@ if(n_eyes > 2)
         end
     end
 else
-    eyes = eye_centers; % Only one eye pair candidate
+    if n_eyes < 2
+        eyes(1,:) = eye_centers; % Only one eye pair candidate
+    else
+        eyes = eye_centers; % Only one eye pair candidate
+    end
 end
+
 
 %% Save only 2 eye candidates
 

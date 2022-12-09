@@ -1,4 +1,11 @@
-img=imread("images/DB1/db1_01.jpg");
+im=imread("images/DB2/cl_01.jpg");
 
-tnm034(img)
+tnm034(im)
 
+
+%% Test all images 
+%images = dir("images/DB1/*.jpg");
+% for i = 1:length(images)
+%     img = imread("images/DB1/" + images(i).name);
+%     tnm034(img)
+% end
