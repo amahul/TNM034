@@ -23,7 +23,7 @@ Dilate = imdilate(Y,SE);
 Erode = imerode(Y,SE);
 
 EyeMapL = Dilate./(Erode+1);
-EyeMapL = im2double(histeq(EyeMapL)); %Send back?
+EyeMapL = im2double(histeq(EyeMapL));
 
 %Combination of Cr and Cb
 EyeMap = EyeMapC.* EyeMapL;
