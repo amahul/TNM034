@@ -8,8 +8,8 @@ mask_im = hybrid_eye(I);
 % Get face mask from face_mask function
 face_mask_res = face_mask(I);
 face_mask_inverse = imcomplement(face_mask_res);
-figure()
-imshow(face_mask_res)
+% figure()
+% imshow(face_mask_res)
 
 % Remove all objects from eye map that is outside face mask
 eye_diff = imbinarize(mask_im - face_mask_inverse);
@@ -33,16 +33,21 @@ eye_props = regionprops(eye_diff,'centroid', 'MajoraxisLength', 'MinoraxisLength
 
 mouth_props = regionprops(mouth_diff,'centroid', 'MajoraxisLength', 'MinoraxisLength', 'Orientation');
 
-%% Call face boundare to eliminate all false candidates
-
+%% Call face boundary to eliminate all false candidates
+figure()
+imshow(I);
 [eye_centers, mouth_center] = face_boundary(eye_props, mouth_props);
 
 %% DEBUG: Print eyes on input image
-
+% mouth_props.Centroid
+% x_length = mouth_props.MajorAxisLength
+% y_length = mouth_props.MinorAxisLength
+% m_center = mouth_props.Centroid
+% 
 % figure()
 % imshow(I);
-% rectangle('Position', [eye_centers(1,1), eye_centers(1,2), 15, 15], 'EdgeColor', 'b', 'LineWidth', 2);
-% rectangle('Position', [eye_centers(2,1), eye_centers(2,2), 15, 15], 'EdgeColor', 'b', 'LineWidth', 2);
-
+% rectangle('Position', [m_center(1)-x_length/2, m_center(2)-y_length/2, x_length, y_length], 'EdgeColor', 'b', 'LineWidth', 2);
+% rectangle('Position', [eye_centers(1,1)-8, eye_centers(1,2)-8, 16, 16], 'EdgeColor', 'b', 'LineWidth', 2);
+% rectangle('Position', [eye_centers(2,1)-8, eye_centers(2,2)-8, 16, 16], 'EdgeColor', 'b', 'LineWidth', 2);
 
 end

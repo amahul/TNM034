@@ -51,13 +51,9 @@ m_map_BW = bwareafilt(m_map_BW,5);
 %% DEBUG: Draw mouth on input image
 % 
 % % Find center and width of white area
-% props = regionprops(m_map1,'centroid', 'MajoraxisLength', 'MinoraxisLength')
-% x_length = props.MajorAxisLength;
-% y_length = props.MinorAxisLength;
-% m_center = props.Centroid;
+% props = regionprops(m_map_BW,'centroid', 'MajoraxisLength', 'MinoraxisLength');
 % 
 % % Draw image with rectangle
-% % m_center = round(props.Centroid);
 % figure()
 % imshow(I);
 % rectangle('Position', [m_center(1)-x_length/2, m_center(2)-y_length/2, x_length, y_length], 'EdgeColor', 'b', 'LineWidth', 2);
