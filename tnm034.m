@@ -1,5 +1,7 @@
 function id = tnm034(im)
 
+im = imread("images/DB1/db1_01.jpg");
+
 % im: Image of unknown face, RGB-image in uint8 format in the
 % range [0,255]
 %
@@ -55,9 +57,7 @@ if min_diff > threshold
     id = 0;
 
 
-
 % identify correct face
-
 
 
 end
