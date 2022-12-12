@@ -1,4 +1,4 @@
-im=imread("images/DB2/cl_01.jpg");
+im=imread("images/DB1/db1_02.jpg");
 
 tnm034(im)
 

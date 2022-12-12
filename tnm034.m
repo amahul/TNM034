@@ -1,4 +1,4 @@
-% function id = tnm034(im)
+function id = tnm034(im)
 
 im = imread("images/DB1/db1_01.jpg");
 

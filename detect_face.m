@@ -8,8 +8,8 @@ mask_im = hybrid_eye(I);
 % Get face mask from face_mask function
 face_mask_res = face_mask(I);
 face_mask_inverse = imcomplement(face_mask_res);
-figure()
-imshow(face_mask_res)
+% figure()
+% imshow(face_mask_res)
 
 % Remove all objects from eye map that is outside face mask
 eye_diff = imbinarize(mask_im - face_mask_inverse);
