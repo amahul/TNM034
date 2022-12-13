@@ -25,8 +25,8 @@ end
 % x_length = x_lengths(mouth_index);
 % y_length = y_lengths(mouth_index);
 m_center = mouth_centers(mouth_index,:);
-x_length = mouth_props.MajorAxisLength;
-y_length = mouth_props.MinorAxisLength;
+% x_length = mouth_props.MajorAxisLength;
+% y_length = mouth_props.MinorAxisLength;
 % 
 % figure()
 % imshow(I);
@@ -74,7 +74,7 @@ if(n_eyes > 2)
     end
 else
     if n_eyes < 2
-        eyes(1,:) = eye_centers; % Only one eye pair candidate
+        eyes(:,1) = eye_centers; % Only one eye pair candidate
     else
         eyes = eye_centers; % Only one eye pair candidate
     end
