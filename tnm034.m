@@ -40,7 +40,7 @@ end
 % disp("minimun weight: " + min_diff)
 
 % Return 0 if weight difference is larger than threshold
-threshold = 0.03
+threshold = 0.03;
 if min_diff > threshold
     id = 0;
 
