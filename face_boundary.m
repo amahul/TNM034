@@ -12,7 +12,7 @@ mouth = zeros(1,2);
 if(size(mouth_props,1) >= 1)
     for i = 1:size(mouth_props,1)
         diff = abs(mouth_orientations(i));
-        % Save mouth with orientation closest to 0 (vertical)
+        % Save mouth with orientation closest to 0 (horizontal)
         if(diff < min_orientation_diff)
             min_orientation_diff = diff;
             mouth = mouth_centers(i,:);
@@ -25,6 +25,8 @@ end
 % x_length = x_lengths(mouth_index);
 % y_length = y_lengths(mouth_index);
 m_center = mouth_centers(mouth_index,:);
+x_length = mouth_props.MajorAxisLength
+y_length = mouth_props.MinorAxisLength
 % 
 % figure()
 % imshow(I);
@@ -96,7 +98,8 @@ if(n_eyes > 2)
         % Find minimun dist difference between mouth and eyes
         % Distance between eyes should be smaller than 1.5 times the 
         % distance between eye and mouth (1.5 is tested and gave the best result)
-        if abs(dist1-dist2) < min_dist && dist_eyes(i) < dist1 && dist_eyes(i) < dist2 && dist1 < 1.5*dist_eyes(i) && dist2 < 1.5*dist_eyes(i)         
+        if abs(dist1-dist2) < min_dist && dist1 < 1.5*dist_eyes(i) && dist2 < 1.5*dist_eyes(i)         
+%         if abs(dist1-dist2) < min_dist && dist_eyes(i) < dist1 && dist_eyes(i) < dist2 && dist1 < 1.5*dist_eyes(i) && dist2 < 1.5*dist_eyes(i)         
             min_dist = abs(dist1-dist2);            
             eyes = eye_candidates(:,:,i);
         end

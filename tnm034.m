@@ -29,8 +29,8 @@ cropped = im2double(cropped);
 % figure()
 % imshow(avg_face)
 diff = rgb2gray(cropped) - avg_face;
-figure
-imshow(diff)
+% figure
+% imshow(diff)
 diff = reshape(diff, [], 1);
 
 input_weight = u'*diff;
@@ -52,7 +52,7 @@ disp("minimun weight: " + min_diff)
 
 threshold = 0.03
 if min_diff > threshold
-    id = 0
+    id = 0;
 
 
 % identify correct face
