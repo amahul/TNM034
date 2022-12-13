@@ -37,6 +37,7 @@ else %right eye is higher than left eye
 
 end
 
+
 %% Scale image to get same distance between the eyes
 eye_dist = 115;
 scale_fac = 0;
