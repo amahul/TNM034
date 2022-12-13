@@ -16,7 +16,7 @@ eye_diff = imbinarize(mask_im - face_mask_inverse);
 [nrows, ~] = size(eye_diff);
 
 % Remove all objects in the 2/3 part below in image (false candidates)
-eye_diff(2/3*nrows:nrows,:) = 0; 
+eye_diff(2/3*uint8(nrows):uint8(nrows),:) = 0; 
 
 % Remove small objects
 eye_diff = bwareaopen(eye_diff,30); 
