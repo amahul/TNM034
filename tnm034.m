@@ -1,7 +1,5 @@
 function id = tnm034(im)
 
-im = imread("images/DB1/db1_01.jpg");
-
 % im: Image of unknown face, RGB-image in uint8 format in the
 % range [0,255]
 %
@@ -52,7 +50,7 @@ end
 disp("Identification: " + id)
 disp("minimun weight: " + min_diff)
 
-threshold = 0.02
+threshold = 0.03
 if min_diff > threshold
     id = 0
 

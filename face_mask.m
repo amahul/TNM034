@@ -1,8 +1,9 @@
 function [binary_img] = face_mask(input_img)
-
+% input_img=imread("images/DB1/db1_01.jpg");
 %% light compensation of the input image
-%gray = gray_world(input_img);
-
+input_img = gray_world(input_img);
+% figure()
+% imshow(input_img)
 %% binary image
 binary_img = zeros(size(input_img, 1), size(input_img,2));
 
@@ -15,7 +16,7 @@ Cb = YCbCr_img(:,:,2);
 Cr = YCbCr_img(:,:,3);
 
 %% Threshold segmentation algorithm
-[row, col] = find(Cb>=85 & Cr>=143 & Cr <=173 & Y >= 80);
+[row, col] = find(Cb>=65 & Cr>=120 & Cr <=150 & Y >= 80);
 
 
 %% Set the skin to white and the rest to black
@@ -35,6 +36,7 @@ binary_img = histeq(binary_img,target);
 binary_img = imbinarize(binary_img, 0.8);
 
 binary_img = bwareafilt(binary_img,1);
-
+% figure()
+% imshow(binary_img)
 end
 

@@ -31,7 +31,7 @@ imshow(img)
 %imshow(img)
 %Subtract mean face, each vector rep the difference
 A = X - avg_face; 
-A_t = transpose(A);
+A_t = A';
 
 %Covariance matrix
 [eigen_vector, eigen_value] = eig(A_t*A);
@@ -48,9 +48,9 @@ end
 
 weight = u_i' * A;
 
-save('weight2.mat', 'weight' )
-save('average_face.mat2','img')
-save('eigen_face.ma2t', 'u_i')
+save('weight.mat', 'weight' )
+save('average_face.mat','img')
+save('eigen_face.mat', 'u_i')
 
 
 

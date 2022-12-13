@@ -2,8 +2,8 @@ function [crop_img] = normalization_face(left_eye, right_eye, input_img)
 %Normalize the images, rotation, scaling and same eye height
 
 %% Find the distance between left and right eye
-dist_eyes_x = abs(left_eye(1)-right_eye(1))
-dist_eyes_y = abs(left_eye(2)-right_eye(2))
+dist_eyes_x = abs(left_eye(1)-right_eye(1));
+dist_eyes_y = abs(left_eye(2)-right_eye(2));
 % Euclidian distance between two points
 hypotenuse = hypot(dist_eyes_x, dist_eyes_y);
 
@@ -47,7 +47,6 @@ if dist_eyes_x ~= 0
     scale_fac = eye_dist/dist_eyes_x;
     scale_img  = imresize(rotate_img, scale_fac);
 end
-
 
 %calculate the new center point 
 [ty_scaled, tx_scaled, ~] = size(scale_img); % [pixel in x, pixel in y, rgb]
