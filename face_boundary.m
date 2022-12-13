@@ -25,8 +25,8 @@ end
 % x_length = x_lengths(mouth_index);
 % y_length = y_lengths(mouth_index);
 m_center = mouth_centers(mouth_index,:);
-x_length = mouth_props.MajorAxisLength
-y_length = mouth_props.MinorAxisLength
+x_length = mouth_props.MajorAxisLength;
+y_length = mouth_props.MinorAxisLength;
 % 
 % figure()
 % imshow(I);
